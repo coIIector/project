@@ -1,7 +1,7 @@
 (function ($) {
     var prefix = 'search:', prefixLength = prefix.length, json;
     var $json, $import, $table, $prefix, $url, $add;
-    var actions = '<td><span data-action="delete" class="glyphicon glyphicon-trash"></span><span data-action="edit" class="glyphicon glyphicon-edit"></span><span data-action="prompt" class="glyphicon glyphicon-play"></span></td>';
+    var actions = '<td><span data-action="delete" class="glyphicon glyphicon-trash"></span><span data-action="edit" class="glyphicon glyphicon-edit"></span><span data-action="prompt" class="glyphicon glyphicon-play"></span><span data-action="default" class="glyphicon glyphicon-asterisk"></span></td>';
 
     var localStorageWrapper = {
         getItem: function (key) {
@@ -29,6 +29,7 @@
         }
     };
 
+    var def = localStorageWrapper.getItem('DEFAULT');
     reloadJson();
 
     $(function () {
@@ -40,7 +41,7 @@
         $add = $('#add');
 
         var prefix = window.location.hash.split(' ')[0].slice(1);
-        if(prefix) {
+        if (prefix) {
             $prefix.val(prefix);
         }
 
@@ -65,6 +66,20 @@
                 window.location = $tr.children().eq(1).text().replace(/\{ARG}/g, encodeURIComponent(arg));
             }
         });
+        $table.on('click', '[data-action=default]', function () {
+            var $tr = $(this).closest('tr');
+            if ($tr.hasClass('default')) {
+                def = null;
+                localStorageWrapper.removeItem('DEFAULT');
+            } else {
+                def = $tr.children().eq(1).text();
+                localStorageWrapper.setItem('DEFAULT', def);
+            }
+
+            reloadJson();
+            updateTextArea();
+            fillTable();
+        });
 
         updateTextArea();
         fillTable();
@@ -80,8 +95,12 @@
     function importJson() {
         json = JSON.parse($json.val());
         localStorageWrapper.clear();
+        def = null;
         forEachKey(function (key, value) {
             localStorageWrapper.setItem(key, value);
+            if (key == 'DEFAULT') {
+                def = value;
+            }
         });
         fillTable();
     }
@@ -90,13 +109,15 @@
         $table.find('tr').slice(1).remove();
 
         forEachKey(function (key, value) {
-            $table.append(
-                $('<tr/>').append(
-                    $('<td/>').text(key)
-                ).append(
-                    $('<td/>').text(value)
-                ).append(actions).attr('data-key', key)
-            );
+            if (key != 'DEFAULT') {
+                $table.append(
+                    $('<tr/>').append(
+                        $('<td/>').text(key)
+                    ).append(
+                        $('<td/>').text(value)
+                    ).append(actions).attr('data-key', key).toggleClass('default', value == def)
+                );
+            }
         });
 
         $table.html($table.html().replace(/\{ARG}/g, '<span>{ARG}</span>'));

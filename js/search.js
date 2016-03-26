@@ -1,1 +1,1 @@
-var h=window.location.hash,i=h.indexOf(" "),s;window.location=1<i&&(s=localStorage.getItem("search:"+h.slice(1,i)))&&s.replace(/\{ARG}/g,h.slice(i+1))||"searchSetup.html"+h;
+var h=decodeURIComponent(window.location.hash),i=h.indexOf(" "),s;window.location=i>1&&(s=localStorage.getItem("search:"+h.slice(1,i)))&&s.replace(/\{ARG}/g,encodeURIComponent(h.slice(i+1)))||(s=localStorage.getItem("search:DEFAULT"))&&s.replace(/\{ARG}/g,encodeURIComponent(h.slice(1)))||"searchSetup.html"+h;
