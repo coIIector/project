@@ -1,4 +1,5 @@
 {
+  "arch": "https://web.archive.org/web/*/{ARG}",
   "g": "https://www.google.com/search?q={ARG}",
   "gt": "https://translate.google.pl/#auto/auto/{ARG}",
   "s": "https://play.spotify.com/search/{ARG}",
