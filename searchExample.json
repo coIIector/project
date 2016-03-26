@@ -1,0 +1,8 @@
+{
+  "g": "https://www.google.com/search?q={ARG}",
+  "gt": "https://translate.google.pl/#auto/auto/{ARG}",
+  "s": "https://play.spotify.com/search/{ARG}",
+  "shell": "http://explainshell.com/explain?cmd={ARG}",
+  "wa": "https://www.wolframalpha.com/input/?i={ARG}",
+  "y": "https://www.youtube.com/results?search_query={ARG}"
+}

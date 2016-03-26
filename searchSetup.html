@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <link rel="stylesheet" href="css/searchSetup.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+          crossorigin="anonymous">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="js/searchSetup.js"></script>
+</head>
+<body style="position: relative;">
+<div class="panel left">
+    <h3>Defined search engines</h3>
+
+    <table class="table table-bordered" id="table">
+        <tr>
+            <th class="prefix">prefix</th>
+            <th>URL</th>
+            <th>actions</th>
+        </tr>
+    </table>
+
+    <div class="row">
+        <div class="col-md-2">
+            <input name="prefix" type="text" class="form-control" placeholder="g">
+        </div>
+        <div class="col-md-8">
+            <input name="url" type="text" class="form-control" placeholder="https://www.google.com/search?q={ARG}">
+        </div>
+        <div class="col-md-2">
+            <button id="add" class="btn btn-default" type="button">Add</button>
+        </div>
+    </div>
+</div>
+<div class="panel right">
+
+    <h3>How to:</h3>
+    <ol start="0">
+        <li>
+            enable
+            <noscript> JavaScript and</noscript>
+            WebStorage (localStorage) for this site
+        </li>
+        <li>
+            set <code>https://coiiector.github.io/project/search.html#%s</code>
+            as default search engine in your browser
+        </li>
+        <li>
+            add search engines in left panel, in URL use <code>{ARG}</code> in place of query, e.g. <code>https://www.google.com/search?q={ARG}</code>
+        </li>
+    </ol>
+
+    <h3>Import/Export:</h3>
+
+    <button id="do-import" class="btn btn-default" type="button">Import</button>
+    <textarea id="json"></textarea>
+</div>
+
+</div>
+</body>
+</html>
