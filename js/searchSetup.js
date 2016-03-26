@@ -1,6 +1,6 @@
 (function ($) {
     var prefix = 'search:', prefixLength = prefix.length, json;
-    var $json, $import, $table, $prefix, $url, $add;
+    var $json, $import, $table, $prefix, $url, $add, $pretty;
     var actions = '<td><span data-action="delete" class="glyphicon glyphicon-trash"></span><span data-action="edit" class="glyphicon glyphicon-edit"></span><span data-action="prompt" class="glyphicon glyphicon-play"></span><span data-action="default" class="glyphicon glyphicon-asterisk"></span></td>';
 
     var localStorageWrapper = {
@@ -39,6 +39,7 @@
         $url = $('[name=url]');
         $prefix = $('[name=prefix]');
         $add = $('#add');
+        $pretty = $('[name=pretty]');
 
         var prefix = window.location.hash.split(' ')[0].slice(1);
         if (prefix) {
@@ -79,6 +80,9 @@
             reloadJson();
             updateTextArea();
             fillTable();
+        });
+        $pretty.on('change', function(){
+            updateTextArea();
         });
 
         updateTextArea();
@@ -144,6 +148,6 @@
     }
 
     function updateTextArea() {
-        $json.val(JSON.stringify(json));
+        $json.val(JSON.stringify(json, null, $pretty.prop('checked') ? '\t' : ''));
     }
 })(jQuery);
