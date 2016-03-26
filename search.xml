@@ -1,8 +1,6 @@
-<?xml version="1.0" encoding="UTF-8" ?> 
 <OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
-     <ShortName>search</ShortName>
-     <Description>search (https://github.com/coIIector/project)</Description>
-     <Image width="16" height="16">data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAOxAAADsQBlSsOGwAAAS5JREFUOI2lkyGvgmAUhh+8lxkMmsRCIRHkfzCCYzZMBh2N33D/hxuBRnJjFJLMGZyDZjMyg47CzOzedLd79ymy8cZz3vNs5z07Upqm33RQr8swwOezYhzHRFHE9XqlrmtGoxGGYbBarVAUpRkQBAG+76NpGrPZDFmWud/vnE4nTNN8D0iSBFVV8X2/1QpCBpIk0eu1j+ZjuVx+/S2UZcnhcGC321FVFQCTyeQlQHp2xjAMieOYoigAGAwG2LbNer1uB/jV7XYjz3O22y2XywXXdXEc55+ncVlFUbAsi81mgyzLHI9HwSMAzuezYCrLkrqu6ff7Qk84o+d5qKqKruuMx2Mejwf7/R6A+Xz+HuC6LlmWkec5VVUxHA7RdZ3FYsF0OhUAjSG2Uedn6gz4AZR7awrDcg+7AAAAAElFTkSuQmCC</Image>
-     <InputEncoding>UTF-8</InputEncoding>
-     <Url type="text/html" template="https://coiiector.github.io/project/search.html#{searchTerms}"/>
+    <ShortName>search</ShortName>
+    <Description>search (https://github.com/coIIector/project)</Description>
+    <Image width="16" height="16">/search.png</Image>
+    <Url type="text/html" method="get" template="https://coiiector.github.io/project/search.html#{searchTerms}"/>
 </OpenSearchDescription>
