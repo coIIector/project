@@ -64,8 +64,19 @@
 
     <h3>Import/Export:</h3>
 
-    <button id="do-import" class="btn btn-default" type="button">Import</button> prettify <input type="checkbox" name="pretty" checked>
+    <button id="do-import" class="btn btn-default" type="button">Import</button>
+    prettify <input type="checkbox" name="pretty" checked>
+    jsonp <input type="checkbox" name="jsonp">
     <textarea id="json"></textarea>
+
+    <div class="row">
+        <div class="col-md-8">
+            <input name="external" type="text" class="form-control" placeholder="g">
+        </div>
+        <div class="col-md-4">
+            <button id="load-external" class="btn btn-default" type="button">load external (jsonp)</button>
+        </div>
+    </div>
 
     <h6><a href="https://github.com/coIIector/project">github</a> <a href="searchExample.json">default config</a></h6>
 </div>

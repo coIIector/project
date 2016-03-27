@@ -1,6 +1,7 @@
 (function ($) {
+    var JSONP_METHOD_NAME = 'loadFromJson';
     var prefix = 'search:', prefixLength = prefix.length, json;
-    var $json, $import, $table, $prefix, $url, $add, $pretty;
+    var $json, $import, $table, $prefix, $url, $add, $pretty, $jsonp, $external, $loadExternal;
     var actions = '<td><span data-action="delete" class="glyphicon glyphicon-trash"></span><span data-action="edit" class="glyphicon glyphicon-edit"></span><span data-action="prompt" class="glyphicon glyphicon-play"></span><span data-action="default" class="glyphicon glyphicon-asterisk"></span></td>';
 
     var localStorageWrapper = {
@@ -30,6 +31,7 @@
     };
 
     var def = localStorageWrapper.getItem('DEFAULT');
+    var external = localStorageWrapper.getItem('EXTERNAL');
     reloadJson();
 
     $(function () {
@@ -40,6 +42,11 @@
         $prefix = $('[name=prefix]');
         $add = $('#add');
         $pretty = $('[name=pretty]');
+        $jsonp = $('[name=jsonp]');
+        $external = $('[name=external]');
+        $loadExternal = $('#load-external');
+
+        $external.val(external);
 
         var prefix = window.location.hash.split(' ')[0].slice(1);
         if (prefix) {
@@ -81,8 +88,22 @@
             updateTextArea();
             fillTable();
         });
-        $pretty.on('change', function(){
+        $pretty.on('change', function () {
             updateTextArea();
+        });
+        $jsonp.on('change', function () {
+            updateTextArea();
+        });
+
+        $loadExternal.on('click', function () {
+            external = $external.val();
+            if (external) {
+                $.getScript(external);
+            } else {
+                localStorageWrapper.setItem('EXTERNAL', external);
+                reloadJson();
+                updateTextArea();
+            }
         });
 
         updateTextArea();
@@ -113,7 +134,7 @@
         $table.find('tr').slice(1).remove();
 
         forEachKey(function (key, value) {
-            if (key != 'DEFAULT') {
+            if (key != 'DEFAULT' && key != 'EXTERNAL') {
                 $table.append(
                     $('<tr/>').append(
                         $('<td/>').text(key)
@@ -148,6 +169,22 @@
     }
 
     function updateTextArea() {
-        $json.val(JSON.stringify(json, null, $pretty.prop('checked') ? '\t' : ''));
+        var val = JSON.stringify(json, null, $pretty.prop('checked') ? '\t' : '');
+        if ($jsonp.prop('checked')) {
+            val = JSONP_METHOD_NAME + '(' + val + ')';
+        }
+        $json.val(val);
     }
+
+    window[JSONP_METHOD_NAME] = function (j) {
+        $.extend(json, j, {'EXTERNAL': external});
+        forEachKey(function (key, value) {
+            localStorageWrapper.setItem(key, value);
+            if (key == 'DEFAULT') {
+                def = value;
+            }
+        });
+        fillTable();
+        updateTextArea();
+    };
 })(jQuery);
