@@ -1,5 +1,5 @@
 var h = window.location.hash, i, s, l, k;
-if (h.match(/^#[a-zA-Z0-9]+\+/))h = h.replace(/\+/g, ' ');
+if (h.indexOf(' ') == -1)h = h.replace(/\+/g, ' ');
 h = decodeURIComponent(h);
 i = h.indexOf(" ");
 l = i > 1 && (s = localStorage.getItem("search:" + h.slice(1, i))) && s.replace(/\{ARG}/g, encodeURIComponent(h.slice(i + 1))) || (s = localStorage.getItem("search:DEFAULT")) && s.replace(/\{ARG}/g, encodeURIComponent(h.slice(1)));
