@@ -71,7 +71,7 @@
             if (!cache[username]) {
                 cache[username] = $.Deferred();
 
-                JSONP("https://api.twitch.tv/kraken/users/" + username + "/follows/channels?limit=100", function (data) {
+                JSONP("https://api.twitch.tv/kraken/users/" + username + "/follows/channels?limit=100&client_id=jzkbprff40iqj646a697cyrvl0zt2m6", function (data) {
                     var allStreamers = data.follows.map(function (stream) {
                         return stream.channel.name;
                     });
