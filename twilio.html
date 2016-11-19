@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hello Client Monkey 3</title>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="//media.twiliocdn.com/sdk/js/client/v1.3/twilio.min.js"></script>
+    <script type="text/javascript">
+        function log(text) {
+            $log.append("<div/>", {text: text})
+        }
+
+        function call() {
+            Twilio.Device.connect({env: 'test'});
+        }
+
+        function hangup() {
+            Twilio.Device.disconnectAll();
+        }
+
+        function connect() {
+            Twilio.Device.setup($('.token').val().trim());
+
+            Twilio.Device.ready(function (device) {
+                console.log('ready', device);
+                log("Ready");
+            });
+
+            Twilio.Device.error(function (error) {
+                console.log('error', error);
+                log("Error: " + error.message);
+            });
+
+            Twilio.Device.connect(function (conn) {
+                console.log('connect', conn);
+                log("Successfully established call");
+            });
+
+            Twilio.Device.disconnect(function (conn) {
+                console.log('disconnect', conn);
+                log("Call ended");
+            });
+
+            Twilio.Device.incoming(function (conn) {
+                console.log('incoming', conn);
+
+                var $conn = $('<div class="connection">new connection from ' + conn.parameters.From + '<button class="accept">accept</button>, <button class="reject">reject</button></div>');
+                $conn.data('connection', conn);
+                $log.append($conn);
+            });
+        }
+
+        var $log;
+        jQuery(function ($) {
+            var $document = $(document);
+            $document.on('click', '.accept', function () {
+                var connection = $(this).closest('.connection').data('connection');
+                connection.accept();
+                $(this).data('action')();
+            });
+
+            $log = $('#log');
+        })
+    </script>
+</head>
+<body>
+<input type="text" class="token"/>
+
+<button class="connect" onclick="connect();">
+    Connect
+</button>
+
+<button class="call" onclick="call();">
+    Call
+</button>
+
+<button class="hangup" onclick="hangup();">
+    Hangup
+</button>
+
+<div id="log">
+</div>
+</body>
+</html>
