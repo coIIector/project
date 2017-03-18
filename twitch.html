@@ -4,6 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
     <link rel="stylesheet" href="css/twitch.css"/>
 
+    <script type="text/javascript" src="js/twitch-api.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/d3/2.10.0/d3.v2.min.js"></script>
     <script type="text/javascript" src="js/packages.js"></script>
@@ -71,7 +72,7 @@
             if (!cache[username]) {
                 cache[username] = $.Deferred();
 
-                JSONP("https://api.twitch.tv/kraken/users/" + username + "/follows/channels?limit=100&client_id=jzkbprff40iqj646a697cyrvl0zt2m6", function (data) {
+                JSONP(TWITCH_API_HOST + "/kraken/users/" + username + "/follows/channels?limit=100&client_id=" + TWITCH_CLIENT_ID, function (data) {
                     var allStreamers = data.follows.map(function (stream) {
                         return stream.channel.name;
                     });
