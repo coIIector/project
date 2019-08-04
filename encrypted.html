@@ -4,9 +4,20 @@
     <meta charset="utf-8">
     <meta name="referrer" content="no-referrer">
     <title>This site is encrypted.</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="js/lib/sjcl.js"></script>
-    <script src="js/html-encrypter.js"></script>
+    <script>
+        (function () {
+            window.htmlEncrypter = {
+                hashPassword: location.hash.slice(1),
+                _onInitArr: [],
+                onInit: function (f) {
+                    this._onInitArr.push(f);
+                }
+            };
+        })();
+    </script>
+    <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script defer src="js/lib/sjcl.js"></script>
+    <script defer src="js/html-encrypter.js"></script>
 </head>
 <body>
 <div id="encrypted"></div>

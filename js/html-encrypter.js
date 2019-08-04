@@ -1,26 +1,17 @@
 (function ($) {
-    let onInit = [];
     let $body = null;
-    window.htmlEncrypter = {
-        onInit: function (f) {
-            onInit.push(f);
-        }
-    };
 
     function doInit() {
-        onInit.forEach(function (f) {
-            f($);
-        });
-
-        onInit = null;
         window.htmlEncrypter.onInit = function (f) {
-            f();
+            f($);
         };
+        window.htmlEncrypter._onInitArr.forEach(window.htmlEncrypter.onInit);
+        delete window.htmlEncrypter._onInitArr;
     }
 
     function preventInit() {
-        onInit = null;
         window.htmlEncrypter.onInit = $.noop;
+        delete window.htmlEncrypter._onInitArr;
     }
 
     $(function () {
@@ -40,8 +31,7 @@
 
     function decrypt($container) {
         const searchParams = new URL(location.href).searchParams;
-        const hashPassword = location.hash.slice(1);
-        const password = hashPassword || prompt("Decrypt with password...");
+        const password = window.htmlEncrypter.hashPassword || prompt("Decrypt with password...");
 
         if (!password)
             return preventInit();
@@ -81,8 +71,7 @@
     }
 
     function encrypt($container) {
-        const hashPassword = location.hash.slice(1);
-        const password = hashPassword || prompt("Encrypt with password");
+        const password = window.htmlEncrypter.hashPassword || prompt("Encrypt with password");
         if (!password) {
             return doInit();
         }
