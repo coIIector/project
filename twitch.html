@@ -16,7 +16,7 @@
 <div style="position:absolute; top:0; right: 0; font-size:18px;">
     username: <input name="username" type="text"><br/>
     tension: <input name="tension" type="range" min="0" max="100" value="85"><br/>
-    k: <input name="k" type="range" min="0" max="20" value="15"><br/>
+    k: <input name="k" type="range" min="0" max="40" value="15"><br/>
     <button type="button" data-role="submit">go!</button>
 </div>
 <script type="text/javascript">
@@ -73,14 +73,21 @@
         function getListOfFollowedUsers(username) {
             if (!cache[username]) {
                 cache[username] = $.Deferred();
+                let arr = [];
+                getWithOffset(0);
 
-                JSONP(TWITCH_API_HOST + "/kraken/users/" + username + "/follows/channels?limit=100&client_id=" + TWITCH_CLIENT_ID, function (data) {
-                    var allStreamers = data.follows.map(function (stream) {
-                        return stream.channel.name;
+                function getWithOffset(offset) {
+                    JSONP(`${TWITCH_API_HOST}/kraken/users/${username}/follows/channels?limit=100&client_id=${TWITCH_CLIENT_ID}&offset=${offset}`, function (data) {
+                        arr = [...arr, ...(data.follows.map(stream => stream.channel.name))];
+
+                        offset += 100;
+                        if (data._total > offset) {
+                            getWithOffset(offset)
+                        } else {
+                            cache[username].resolve(arr);
+                        }
                     });
-
-                    cache[username].resolve(allStreamers);
-                });
+                }
             }
 
             return cache[username];
