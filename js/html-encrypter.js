@@ -57,8 +57,8 @@
                 reject(`Data not found: ${jsonUrl}`);
             });
         }).then(function (text) {
-            const decrypted = sjcl.decrypt(password, text);
-            $body.append($('<div/>', {id: 'decrypted', html: decrypted}));
+            window.htmlEncrypter.decrypted = sjcl.decrypt(password, text);
+            $body.append($('<div/>', {id: 'decrypted', html: window.htmlEncrypter.decrypted}));
             doInit();
         }).catch(function (error) {
             if (error && error.message && error.message === "ccm: tag doesn't match") {
