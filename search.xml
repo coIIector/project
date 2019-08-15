@@ -1,6 +1,0 @@
-<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
-    <ShortName>search</ShortName>
-    <Description>search (https://github.com/coIIector/project)</Description>
-    <Image width="16" height="16">/search.png</Image>
-    <Url type="text/html" method="get" template="https://coiiector.github.io/project/search.html#{searchTerms}"/>
-</OpenSearchDescription>

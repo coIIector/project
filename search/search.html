@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>c-search</title>
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/project/search.png"
+    />
+    <meta name="referrer" content="no-referrer" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="google" content="notranslate" />
+    <meta
+      name="format-detection"
+      content="telephone=no, email=no, address=no"
+    />
+    <script>
+      navigator.serviceWorker
+        .register("/project/search/sw.js")
+        .then(function (o) {
+          console.log("registration", o);
+        })
+        .catch(function (o) {
+          console.log("error", o);
+        });
+    </script>
+  </head>
+  <body></body>
+</html>
